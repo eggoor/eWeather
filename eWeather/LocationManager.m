@@ -34,6 +34,10 @@
 	return self;
 }
 
+- (void)dealloc {
+	[self.locationManager stopUpdatingLocation];
+}
+
 - (void)startDetermineLocationAndLocality {
 	if (self.locationManager.authorizationStatus != kCLAuthorizationStatusAuthorized) {
 		[self.locationManager requestWhenInUseAuthorization];
@@ -65,7 +69,6 @@
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation*>*)locations {
-	[manager stopUpdatingLocation];
 	CLLocation* location = [locations lastObject];
 	
 	if (!location) {
